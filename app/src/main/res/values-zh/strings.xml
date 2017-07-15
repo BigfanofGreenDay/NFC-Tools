@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NFC</string>
+    <string name="settings">设置</string>
+    <string name="management">管理</string>
+    <string name="add_category">添加分类</string>
+    <string name="stared_cards">星标卡片</string>
+    <string name="all_cards">所有卡片</string>
+    <string name="cards">卡片</string>
+</resources>
