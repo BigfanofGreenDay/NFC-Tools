@@ -1,15 +1,16 @@
-package cc.metapro.nfc
+package cc.metapro.nfc.home
 
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cc.metapro.nfc.data.local.LocalSource
+import cc.metapro.nfc.R
+import cc.metapro.nfc.custom.FullStandRecyclerView
 import cc.metapro.nfc.model.Card
 
 
@@ -20,17 +21,21 @@ import cc.metapro.nfc.model.Card
  */
 class CardsFragment : Fragment(), CardsContract.View {
 
-    private lateinit var mPresenter : CardsContract.Presenter
+    private lateinit var mPresenter: CardsContract.Presenter
     internal lateinit var cardsAdapter: CardsAdapter
-    internal lateinit var recyclerView: RecyclerView
+    internal lateinit var recyclerView: FullStandRecyclerView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_cards, container, false)
-        recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView = view.findViewById<FullStandRecyclerView>(R.id.recycler_view)
         cardsAdapter = CardsAdapter(ArrayList())
+        val callback = SimpleItemTouchHelperCallback(cardsAdapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(recyclerView)
         recyclerView.adapter = cardsAdapter
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.setEmptyView(R.layout.view_empty_cards)
         return view
     }
 

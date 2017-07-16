@@ -38,9 +38,9 @@ class LocalSource private constructor(context: Context) : Source {
                 result.add(card)
             }
         }
-        result.add(Card(1, "Test", "just for test", byteArrayOf(123, 23, 56, 79, 11, 90, 12, 23, 23, 43, 53, 12, 21, 12)))
-        result.add(Card(2, "Hello", "just for test", byteArrayOf()))
-        result.add(Card(3, "World", "just for test", byteArrayOf()))
+//        result.add(Card(1, "Test", "just for test", byteArrayOf(123, 23, 56, 79, 11, 90, 12, 23, 23, 43, 53, 12, 21, 12)))
+//        result.add(Card(2, "Hello", "just for test", byteArrayOf()))
+//        result.add(Card(3, "World", "just for test", byteArrayOf()))
         return result
     }
 

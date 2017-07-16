@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="关于">
+        <Preference android:title="Github Repo (Kotlin)">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/jeffreystoke/nfc-example"/>
+        </Preference>
+        <Preference android:title="Github Repo (Java)">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/Boolleanl/nfc-example"/>
+        </Preference>
+        <Preference android:title="@string/donate">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="alipayqr://platformapi/startapp?saId=10000007&amp;qrcode=https://qr.alipay.com/TSX06511IXXRJJTBUAAOC0"/>
+        </Preference>
+        <Preference android:title="Open Source - Apache License v2">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://www.apache.org/licenses/LICENSE-2.0"/>
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

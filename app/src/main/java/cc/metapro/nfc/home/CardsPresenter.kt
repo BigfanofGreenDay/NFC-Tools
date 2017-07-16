@@ -1,4 +1,4 @@
-package cc.metapro.nfc
+package cc.metapro.nfc.home
 
 import android.content.Context
 import cc.metapro.nfc.data.local.LocalSource
@@ -17,14 +17,19 @@ class CardsPresenter(context: Context, val view: CardsContract.View) : CardsCont
     }
 
     override fun setCategory(category: String) {
-
+        view.showCards(localSource.getCardsByCategory(category))
     }
 
     override fun delCard(id: Int) {
-
+        localSource.delCard(id)
     }
 
     override fun addCard(card: Card) {
-
+        localSource.addCard(card)
     }
+
+    override fun modifyCard(id: Int, card: Card) {
+        localSource.updateCard(id, card)
+    }
+
 }

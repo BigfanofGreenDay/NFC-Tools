@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cc.metapro.nfc.CardsFragment">
+    tools:context="cc.metapro.nfc.home.CardsFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <cc.metapro.nfc.custom.FullStandRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

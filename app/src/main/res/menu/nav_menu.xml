@@ -5,10 +5,10 @@
 
     <item android:title="@string/cards">
         <menu>
-            <item
-                android:id="@+id/nav_stared_cards"
-                android:icon="@drawable/ic_menu_star"
-                android:title="@string/stared_cards"/>
+            <!--<item-->
+            <!--android:id="@+id/nav_stared_cards"-->
+            <!--android:icon="@drawable/ic_menu_star"-->
+            <!--android:title="@string/stared_cards"/>-->
             <item
                 android:id="@+id/nav_all_cards"
                 android:icon="@drawable/ic_menu_wallet"
@@ -18,13 +18,14 @@
 
     <item android:title="@string/management">
         <menu>
-            <item android:id="@+id/nav_add_category"
-                  android:icon="@drawable/ic_menu_add"
-                  android:title="@string/add_category"/>
             <item
-                android:id="@+id/nav_settings"
+                android:id="@+id/nav_nfc"
                 android:icon="@drawable/ic_menu_settings"
-                android:title="@string/settings"/>
+                android:title="@string/nfc_settings"/>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="@string/about"/>
         </menu>
     </item>
 

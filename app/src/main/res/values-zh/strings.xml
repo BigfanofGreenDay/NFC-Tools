@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NFC</string>
-    <string name="settings">设置</string>
+    <string name="about">关于我们</string>
     <string name="management">管理</string>
     <string name="add_category">添加分类</string>
     <string name="stared_cards">星标卡片</string>
     <string name="all_cards">所有卡片</string>
     <string name="cards">卡片</string>
+    <string name="to_add_card">将卡片贴近传感器添加卡片</string>
+    <string name="mock">模拟</string>
+    <string name="donate">捐赠</string>
+
+    <string name="nfc_service">NFC 服务</string>
+    <string name="aid_group">AID 组</string>
+    <string name="nfc_settings">NFC 设置</string>
 </resources>
