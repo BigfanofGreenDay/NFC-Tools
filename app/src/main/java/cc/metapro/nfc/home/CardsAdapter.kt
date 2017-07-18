@@ -1,5 +1,7 @@
 package cc.metapro.nfc.home
 
+import android.content.Intent
+import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
@@ -7,38 +9,83 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import cc.metapro.nfc.R
+import cc.metapro.nfc.detail.DetailActivity
 import cc.metapro.nfc.model.Card
-import java.util.*
+import cc.metapro.nfc.settings.SettingsActivity
+import cc.metapro.nfc.util.checkHCESupport
+import cc.metapro.nfc.util.showSnackBar
+import com.afollestad.materialdialogs.MaterialDialog
 
 internal interface ItemTouchHelperAdapter {
-
-    fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
-
     fun onItemDismiss(position: Int)
 }
 
-class CardsAdapter(cards: List<Card>) : RecyclerView.Adapter<CardsAdapter.Companion.CardViewHolder>(), ItemTouchHelperAdapter {
-    private var cards: MutableList<Card> = cards.toMutableList()
+interface ItemRemoveCallback {
+    fun onRemove(card: Card)
+    fun onAdd(card: Card)
+}
+
+class CardsAdapter(cardList: List<Card>) : RecyclerView.Adapter<CardsAdapter.Companion.CardViewHolder>(), ItemTouchHelperAdapter {
+    private var cards: MutableList<Card> = cardList.toMutableList()
+    private var mCallback: ItemTouchHelper.Callback
+    private lateinit var mItemRemoveCallback: ItemRemoveCallback
+
+    init {
+        class SimpleItemTouchHelperCallback(private val mAdapter: CardsAdapter) : ItemTouchHelper.Callback() {
+
+            override fun isItemViewSwipeEnabled(): Boolean {
+                return true
+            }
+
+            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+                return makeMovementFlags(dragFlags, swipeFlags)
+            }
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                                target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val toDelete = cards[position]
+                mAdapter.onItemDismiss(position)
+                class ActionCallback : View.OnClickListener {
+                    override fun onClick(p0: View?) {
+                        cards.add(toDelete)
+                        mItemRemoveCallback.onAdd(toDelete)
+                        notifyDataSetChanged()
+                    }
+                }
+                viewHolder.itemView.showSnackBar(viewHolder.itemView.context.getString(R.string.delete_card_c, toDelete.title),
+                        viewHolder.itemView.context.getString(android.R.string.cancel),
+                        ActionCallback())
+            }
+        }
+        mCallback = SimpleItemTouchHelperCallback(this)
+    }
+
+    fun getItemTouchHelperCallback(): ItemTouchHelper.Callback {
+        return mCallback
+    }
+
+    fun setOnItemRemoveCallback(callback: ItemRemoveCallback) {
+        mItemRemoveCallback = callback
+    }
 
     fun setCards(cards: List<Card>) {
         this.cards = cards.toMutableList()
+        notifyDataSetChanged()
     }
 
-    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
-        if (fromPosition < toPosition) {
-            for (i in fromPosition..toPosition - 1) {
-                Collections.swap(cards, i, i + 1)
-            }
-        } else {
-            for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(cards, i, i - 1)
-            }
-        }
-        notifyItemMoved(fromPosition, toPosition)
-        return true
+    fun getResultCards(): List<Card> {
+        return cards
     }
 
     override fun onItemDismiss(position: Int) {
+        mItemRemoveCallback.onRemove(cards[position])
         cards.removeAt(position)
         notifyItemRemoved(position)
     }
@@ -60,45 +107,18 @@ class CardsAdapter(cards: List<Card>) : RecyclerView.Adapter<CardsAdapter.Compan
         class CardViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
             private val mTitleText = itemView?.findViewById<TextView>(R.id.card_title)
             private val mDescpText = itemView?.findViewById<TextView>(R.id.card_description)
-            private val mDataText = itemView?.findViewById<TextView>(R.id.card_data)
+            private val mMock = itemView?.findViewById<AppCompatButton>(R.id.mock)
 
             fun setView(c: Card) {
                 mTitleText?.text = c.title
                 mDescpText?.text = c.descp
-                val sb = StringBuilder()
-                for (b in c.data) {
-                    sb.append(String.format("%02x", b)).append(" ")
-                }
-                mDataText?.text = sb.toString()
+                itemView.setOnClickListener({ DetailActivity.startActivity(itemView.context, c) })
+                mMock?.setOnClickListener({
+                    itemView.context.checkHCESupport(MaterialDialog.SingleButtonCallback { _, _ ->
+                        itemView.context.startActivity(Intent(itemView.context, SettingsActivity::class.java))
+                    })
+                })
             }
         }
     }
-}
-
-class SimpleItemTouchHelperCallback(private val mAdapter: CardsAdapter) : ItemTouchHelper.Callback() {
-
-//    override fun isLongPressDragEnabled(): Boolean {
-//        return true
-//    }
-
-    override fun isItemViewSwipeEnabled(): Boolean {
-        return true
-    }
-
-    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-        return makeMovementFlags(dragFlags, swipeFlags)
-    }
-
-    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder): Boolean {
-        mAdapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
-        return true
-    }
-
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        mAdapter.onItemDismiss(viewHolder.adapterPosition)
-    }
-
 }

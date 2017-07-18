@@ -3,7 +3,6 @@ package cc.metapro.nfc.settings
 
 import android.os.Bundle
 import android.preference.PreferenceFragment
-import android.support.v4.app.Fragment
 import cc.metapro.nfc.R
 
 class SettingsFragment : PreferenceFragment(), SettingsContract.View {

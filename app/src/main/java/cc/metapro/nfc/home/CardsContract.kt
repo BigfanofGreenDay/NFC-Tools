@@ -12,8 +12,9 @@ interface CardsContract {
 
     interface Presenter : BasePresenter {
         fun setCategory(category: String)
-        fun delCard(id: Int)
+        fun storeCards(cards: List<Card>)
+        fun delCard(id: String)
         fun addCard(card: Card)
-        fun modifyCard(id: Int, card: Card)
+        fun modifyCard(id: String, card: Card)
     }
 }

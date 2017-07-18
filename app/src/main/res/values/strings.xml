@@ -15,8 +15,47 @@
     <string name="nfc_service">NFC Service</string>
     <string name="aid_group">AID Group</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="donate">Donate</string>
+    <string name="donate">Donate (AliPay)</string>
     <string name="nfc_settings">NFC Settings</string>
+    <string name="save">Save</string>
+    <string name="card_id">Card ID</string>
+    <string name="card_name">Title</string>
+    <string name="description">Description</string>
+    <string name="card_data">Card Data</string>
+    <string name="detailed">Detailed</string>
+    <string name="brief">Brief</string>
+    <string name="read_mode">Scan Mode</string>
+    <string name="card_reading_notice">Reading card data…</string>
+    <string name="read_fail">Fail reading</string>
+    <string name="read_fail_notice">Read exception or unsupported card</string>
+    <string name="tech">Tech</string>
+    <string name="transaction_date">Transaction Date</string>
+    <string name="amount">Amount</string>
+    <string name="transaction_type">Transaction Type</string>
+    <string name="transaction_country">Transaction Country</string>
+    <string name="crypto">Crypto</string>
+    <string name="card_detail">Detail</string>
+    <string name="raw_info">Raw</string>
+    <string name="card_info">Card Info</string>
+    <string name="transaction">Transaction</string>
+    <string name="expire">Expire</string>
+    <string name="notice">Notice</string>
+    <string name="version_notice">We are working on it, it is coming soon.\nRefer to About Us to support our develop.</string>
+    <string name="fail">Fail</string>
+    <string name="hce_unsupported">Your device seems not support Host Card Emulation(HCE)</string>
+    <string name="card_issuer">Card issuer\n(possible)</string>
+    <string name="pin_try_left">Pin try left</string>
+    <string name="n_times">%1$d Time(s)</string>
+    <string name="card_type">Card type</string>
+    <string name="holder_name">Holder name</string>
+    <string name="card_aid" translatable="false">Card AID</string>
+    <string name="application">Application</string>
+    <string name="nfc_not_support_notice">It seems your device doesn\'t support NFC</string>
+    <string name="nfc_not_support">NFC Required</string>
+    <string name="turn_on_nfc">Turn on NFC</string>
+    <string name="nfc_is_needed">Need NFC to scan your card</string>
+    <string name="no_more_notice">Never Show Again</string>
+    <string name="delete_card_c">Delete Card %1$s ?</string>
+    <string name="first_launch_notice">Usage: Hold your NFC card to the back of your phone</string>
+    <string name="welcome">Welcome</string>
 </resources>

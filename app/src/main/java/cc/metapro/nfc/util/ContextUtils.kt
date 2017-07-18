@@ -7,6 +7,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import cc.metapro.nfc.R
 import com.afollestad.materialdialogs.MaterialDialog
 
 fun Context.showToast(toShow: String) {
@@ -18,8 +19,9 @@ fun Context.showToast(toShow: String) {
 fun AppCompatActivity.showNFCNotSupport() {
     Handler(Looper.getMainLooper()).post({
         MaterialDialog.Builder(this)
-                .title("不支持 NFC").content("本设备不支持 NFC 功能")
-                .positiveText(android.R.string.ok).onPositive({ _, _ -> finish() }).show()
+                .title(R.string.nfc_not_support)
+                .content(R.string.nfc_not_support_notice)
+                .positiveText(android.R.string.ok).show()
     })
 }
 
@@ -30,11 +32,11 @@ fun Context.showEnableNFC() {
     }
     Handler(Looper.getMainLooper()).post({
         MaterialDialog.Builder(this)
-                .title("打开 NFC").content("需要打开 NFC 才能使用软件功能")
+                .title(R.string.turn_on_nfc).content(R.string.nfc_is_needed)
                 .positiveText(android.R.string.ok).onPositive({ _, _ ->
             startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
         }).negativeText(android.R.string.cancel)
-                .neutralText("不再提示").onNeutral({ _, _ ->
+                .neutralText(R.string.no_more_notice).onNeutral({ _, _ ->
             helper.putBoolean(PrefHelper.PREF_ENABLE_NFC_DIALOG, false)
         }).show()
     })

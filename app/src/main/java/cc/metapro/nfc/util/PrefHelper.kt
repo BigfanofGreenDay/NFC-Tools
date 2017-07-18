@@ -10,6 +10,8 @@ class PrefHelper private constructor(context: Context) {
 
     companion object {
         val PREF_ENABLE_NFC_DIALOG = "show_enable_nfc_dialog"
+        val PREF_DETAILED_READ_MODE = "detailed_read_mode"
+        val PREF_FIRST_LAUNCH = "first_launch"
         private var sPref: PrefHelper? = null
 
         fun getInstance(context: Context): PrefHelper {

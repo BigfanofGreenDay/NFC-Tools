@@ -9,10 +9,10 @@ import cc.metapro.nfc.model.Category
 class LocalSource private constructor(context: Context) : Source {
 
     companion object {
-        internal var localSource: LocalSource? = null
-        internal var db: SQLiteDatabase? = null
+        private var localSource: LocalSource? = null
+        private var db: SQLiteDatabase? = null
 
-        fun getInstance(context: Context): Source {
+        fun initial(context: Context) {
             synchronized(LocalSource::class.java) {
                 if (localSource == null) {
                     synchronized(LocalSource::class.java) {
@@ -20,6 +20,9 @@ class LocalSource private constructor(context: Context) : Source {
                     }
                 }
             }
+        }
+
+        fun getInstance(): Source {
             return localSource!!
         }
     }
@@ -38,19 +41,19 @@ class LocalSource private constructor(context: Context) : Source {
                 result.add(card)
             }
         }
-//        result.add(Card(1, "Test", "just for test", byteArrayOf(123, 23, 56, 79, 11, 90, 12, 23, 23, 43, 53, 12, 21, 12)))
-//        result.add(Card(2, "Hello", "just for test", byteArrayOf()))
-//        result.add(Card(3, "World", "just for test", byteArrayOf()))
         return result
     }
 
-    override fun getCard(id: Int): Card? {
+    override fun getCard(id: String): Card? {
         val c = db?.rawQuery("""
                 |SELECT * FROM ${CardSchema.tableName}
                 |WHERE ${CardSchema.cardID} = ?""".trimMargin(),
-                arrayOf("{id}"))
-        if (c != null && !c.isAfterLast) {
-            return CardWrapper.unWrap(c)
+                arrayOf(id))
+        if (c != null) {
+            c.moveToNext()
+            if (!c.isAfterLast) {
+                return CardWrapper.unWrap(c)
+            }
         }
         return null
     }
@@ -77,11 +80,11 @@ class LocalSource private constructor(context: Context) : Source {
         db?.insert(CardSchema.tableName, null, CardWrapper.wrap(card))
     }
 
-    override fun delCard(id: Int) {
-        db?.delete(CardSchema.tableName, "${CardSchema.cardID} = ?", arrayOf("{id}"))
+    override fun delCard(id: String) {
+        db?.delete(CardSchema.tableName, "${CardSchema.cardID} = ?", arrayOf(id))
     }
 
-    override fun updateCard(id: Int, card: Card) {
+    override fun updateCard(id: String, card: Card) {
         delCard(id)
         addCard(card)
     }

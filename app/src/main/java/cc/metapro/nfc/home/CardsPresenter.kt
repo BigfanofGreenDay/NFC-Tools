@@ -1,12 +1,15 @@
 package cc.metapro.nfc.home
 
-import android.content.Context
 import cc.metapro.nfc.data.local.LocalSource
 import cc.metapro.nfc.model.Card
 
-class CardsPresenter(context: Context, val view: CardsContract.View) : CardsContract.Presenter {
+class CardsPresenter(val view: CardsContract.View) : CardsContract.Presenter {
 
-    val localSource = LocalSource.getInstance(context)
+    val localSource = LocalSource.getInstance()
+
+    init {
+        view.setPresenter(this)
+    }
 
     override fun subscribe() {
         view.showCards(localSource.getCards())
@@ -20,7 +23,7 @@ class CardsPresenter(context: Context, val view: CardsContract.View) : CardsCont
         view.showCards(localSource.getCardsByCategory(category))
     }
 
-    override fun delCard(id: Int) {
+    override fun delCard(id: String) {
         localSource.delCard(id)
     }
 
@@ -28,8 +31,14 @@ class CardsPresenter(context: Context, val view: CardsContract.View) : CardsCont
         localSource.addCard(card)
     }
 
-    override fun modifyCard(id: Int, card: Card) {
+    override fun modifyCard(id: String, card: Card) {
         localSource.updateCard(id, card)
+    }
+
+    override fun storeCards(cards: List<Card>) {
+        for (c in cards) {
+            localSource.updateCard(c.id, c)
+        }
     }
 
 }

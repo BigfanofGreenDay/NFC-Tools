@@ -3,9 +3,7 @@
                    android:description="@string/nfc_service"
                    android:requireDeviceUnlock="false">
     <aid-group
-        android:category="other"
+        android:category="payment"
         android:description="@string/aid_group">
-        <aid-filter android:name="F0010203040506"/>
-        <aid-filter android:name="F0394148148100"/>
     </aid-group>
 </host-apdu-service>

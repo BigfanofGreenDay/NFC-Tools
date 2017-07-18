@@ -14,28 +14,40 @@ import cc.metapro.nfc.custom.FullStandRecyclerView
 import cc.metapro.nfc.model.Card
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CardsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CardsFragment : Fragment(), CardsContract.View {
 
     private lateinit var mPresenter: CardsContract.Presenter
-    internal lateinit var cardsAdapter: CardsAdapter
-    internal lateinit var recyclerView: FullStandRecyclerView
+    internal lateinit var mCardsAdapter: CardsAdapter
+    internal lateinit var mRecyclerView: FullStandRecyclerView
+
+    companion object {
+        fun newInstance(): CardsFragment {
+            val fragment = CardsFragment()
+            return fragment
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_cards, container, false)
-        recyclerView = view.findViewById<FullStandRecyclerView>(R.id.recycler_view)
-        cardsAdapter = CardsAdapter(ArrayList())
-        val callback = SimpleItemTouchHelperCallback(cardsAdapter)
+        val view = inflater!!.inflate(R.layout.fragment_allcards, container, false)
+        mRecyclerView = view.findViewById<FullStandRecyclerView>(R.id.recycler_view)
+        mCardsAdapter = CardsAdapter(ArrayList())
+        class Callback : ItemRemoveCallback {
+            override fun onAdd(card: Card) {
+                mPresenter.addCard(card)
+            }
+
+            override fun onRemove(card: Card) {
+                mPresenter.delCard(card.id)
+            }
+        }
+        mCardsAdapter.setOnItemRemoveCallback(Callback())
+        val callback = mCardsAdapter.getItemTouchHelperCallback()
         val touchHelper = ItemTouchHelper(callback)
-        touchHelper.attachToRecyclerView(recyclerView)
-        recyclerView.adapter = cardsAdapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.setEmptyView(R.layout.view_empty_cards)
+        touchHelper.attachToRecyclerView(mRecyclerView)
+        mRecyclerView.adapter = mCardsAdapter
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        mRecyclerView.itemAnimator = DefaultItemAnimator()
+        mRecyclerView.setEmptyView(R.layout.view_empty_cards)
         return view
     }
 
@@ -44,15 +56,8 @@ class CardsFragment : Fragment(), CardsContract.View {
     }
 
     override fun showCards(cards: List<Card>) {
-        cardsAdapter.setCards(cards)
-        cardsAdapter.notifyDataSetChanged()
-    }
-
-    companion object {
-        fun newInstance(): CardsFragment {
-            val fragment = CardsFragment()
-            return fragment
-        }
+        mCardsAdapter.setCards(cards)
+        mCardsAdapter.notifyDataSetChanged()
     }
 
 }

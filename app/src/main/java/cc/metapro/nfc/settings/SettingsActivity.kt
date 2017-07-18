@@ -1,11 +1,11 @@
 package cc.metapro.nfc.settings
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import cc.metapro.nfc.R
+import cc.metapro.nfc.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
 
     internal lateinit var mPresenter: SettingsContract.Presenter
     internal lateinit var mView: SettingsFragment
