@@ -51,10 +51,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         // nfc is not supported on the device
         if (nfcAdapter == null) {
             showNFCNotSupport()
-        }
-
-        // nfc is not enabled on the device
-        if (!nfcAdapter!!.isEnabled) {
+        } else if (!nfcAdapter!!.isEnabled) {
+            // nfc is not enabled on the device
             showEnableNFC()
         }
 
@@ -63,17 +61,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             handleIntent(intent)
         }
 
+        mPresenter = CardsPresenter(mView)
+    }
+
+    fun initView() {
         if (PrefHelper.getInstance(this).getBoolean(PrefHelper.PREF_FIRST_LAUNCH, true)) {
             MaterialDialog.Builder(this)
                     .title(R.string.welcome).content(R.string.first_launch_notice)
                     .positiveText(android.R.string.ok).show()
             PrefHelper.getInstance(this).putBoolean(PrefHelper.PREF_FIRST_LAUNCH, false)
+            PrefHelper.getInstance(this).putBoolean(PrefHelper.PREF_DETAILED_READ_MODE, true)
         }
 
-        mPresenter = CardsPresenter(mView)
-    }
-
-    fun initView() {
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false)
         val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)

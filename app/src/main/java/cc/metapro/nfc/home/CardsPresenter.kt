@@ -28,7 +28,10 @@ class CardsPresenter(val view: CardsContract.View) : CardsContract.Presenter {
     }
 
     override fun addCard(card: Card) {
-        localSource.addCard(card)
+        val c = localSource.getCard(card.id)
+        if (c == null) {
+            localSource.addCard(card)
+        }
     }
 
     override fun modifyCard(id: String, card: Card) {

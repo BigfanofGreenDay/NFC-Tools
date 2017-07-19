@@ -38,8 +38,8 @@ class CardsAdapter(cardList: List<Card>) : RecyclerView.Adapter<CardsAdapter.Com
             }
 
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+                val dragFlags = 0
+                val swipeFlags = ItemTouchHelper.START
                 return makeMovementFlags(dragFlags, swipeFlags)
             }
 
@@ -80,10 +80,6 @@ class CardsAdapter(cardList: List<Card>) : RecyclerView.Adapter<CardsAdapter.Com
         notifyDataSetChanged()
     }
 
-    fun getResultCards(): List<Card> {
-        return cards
-    }
-
     override fun onItemDismiss(position: Int) {
         mItemRemoveCallback.onRemove(cards[position])
         cards.removeAt(position)
@@ -92,6 +88,7 @@ class CardsAdapter(cardList: List<Card>) : RecyclerView.Adapter<CardsAdapter.Com
 
     override fun onBindViewHolder(holder: CardViewHolder?, position: Int) {
         holder?.setView(cards[position])
+        mItemRemoveCallback.onAdd(cards[position])
     }
 
     override fun getItemCount(): Int {

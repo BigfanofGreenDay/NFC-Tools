@@ -7,7 +7,7 @@
 
     <uses-feature
         android:name="android.hardware.nfc"
-        android:required="true"/>
+        android:required="false"/>
 
     <application
         android:name=".NFC"
@@ -41,7 +41,8 @@
             android:name=".detail.DetailActivity"
             android:label="@string/card_detail"
             android:parentActivityName=".home.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
             android:name=".settings.SettingsActivity"

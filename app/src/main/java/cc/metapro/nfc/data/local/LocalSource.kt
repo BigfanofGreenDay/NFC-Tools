@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import cc.metapro.nfc.data.Source
 import cc.metapro.nfc.model.Card
 import cc.metapro.nfc.model.Category
+import java.util.*
 
 class LocalSource private constructor(context: Context) : Source {
 
