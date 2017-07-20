@@ -40,6 +40,14 @@ fun ByteArray.string(): String {
     return sb.toString().toUpperCase()
 }
 
+fun String.byteArray(): ByteArray {
+    val ids = this.split(":")
+    val idBytes = ByteArray(ids.size, {
+        Integer.parseInt(ids[it], 16).toByte()
+    })
+    return idBytes
+}
+
 private fun getAts(pIso: IsoDep): ByteArray {
     var ret: ByteArray = byteArrayOf()
     if (pIso.isConnected) {

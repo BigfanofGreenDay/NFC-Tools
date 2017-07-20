@@ -10,6 +10,10 @@ import android.view.MenuItem
 import cc.metapro.nfc.R
 import cc.metapro.nfc.base.BaseActivity
 import cc.metapro.nfc.model.Card
+import cc.metapro.nfc.util.isShareIntent
+import cc.metapro.nfc.util.showToast
+import com.afollestad.materialdialogs.MaterialDialog
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_detail.*
 
 
@@ -65,8 +69,20 @@ class DetailActivity : BaseActivity() {
             }
         }
         view_pager.adapter = MyAdapter()
-
-        mCard = intent.getSerializableExtra(KEY_CARD_EXTRA) as Card
+        if (intent.isShareIntent()) {
+            val content = intent.getStringExtra(Intent.EXTRA_TEXT)
+            if (content != null) {
+                try {
+                    mCard = Gson().fromJson<Card>(content, Card::class.java)
+                } catch (e: Exception) {
+                    mCard = Card("", "", "", "", "", "")
+                    MaterialDialog.Builder(this).title(R.string.invalid_card)
+                            .content(R.string.correct_add_method).show()
+                }
+            }
+        } else {
+            mCard = intent.getSerializableExtra(KEY_CARD_EXTRA) as Card
+        }
         mPresenter = DetailPresenter(mCard, mRawInfoView, mBankInfoView, mTransactionView)
     }
 
@@ -78,11 +94,13 @@ class DetailActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item?.itemId
         when (id) {
+            android.R.id.home -> finish()
             R.id.save -> {
                 mCard = mRawInfoView.getResultCard()
                 mCard.title = input_card_title.text.toString()
                 mCard.descp = input_card_descp.text.toString()
                 mPresenter.storeCard(mCard)
+                showToast(getString(R.string.saved))
             }
         }
         return true

@@ -12,6 +12,11 @@
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/Boolleanl/nfc-example"/>
         </Preference>
+        <Preference android:title="@string/rate_this_app">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://coolapk.com/apk/cc.metapro.nfc"/>
+        </Preference>
         <Preference android:title="@string/donate">
             <intent
                 android:action="android.intent.action.VIEW"

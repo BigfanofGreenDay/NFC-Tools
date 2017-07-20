@@ -8,7 +8,6 @@
     <string name="all_cards">所有卡片</string>
     <string name="cards">卡片</string>
     <string name="to_add_card">将卡片贴近传感器添加卡片</string>
-    <string name="mock">模拟</string>
     <string name="donate">捐赠 (支付宝)</string>
 
     <string name="nfc_service">NFC 服务</string>
@@ -31,7 +30,7 @@
     <string name="transaction_type">交易类型</string>
     <string name="transaction_country">交易地点</string>
     <string name="crypto">加密设备</string>
-    <string name="card_detail">详细信息</string>
+    <string name="card_detail">卡片详情</string>
     <string name="raw_info">原始信息</string>
     <string name="card_info">卡片信息</string>
     <string name="transaction">交易信息</string>
@@ -54,4 +53,23 @@
     <string name="delete_card_c">删除卡片 %1$s ?</string>
     <string name="first_launch_notice">使用方法: 打开 NFC 功能后将卡片贴近传感器</string>
     <string name="welcome">欢迎</string>
+    <string name="rate_this_app">给我评分</string>
+    <string name="emulate">模拟</string>
+    <string name="stop_emulation">停止模拟</string>
+    <string name="emulating">正在模拟 ID</string>
+    <string name="saved">已保存</string>
+    <string name="emulation_notice">仅模拟卡片 ID</string>
+    <string name="emulation_exited">卡片模拟已退出</string>
+    <string name="press_stop_to_exit_emulation">点击 停止 结束模拟</string>
+    <string name="more">更多</string>
+    <string name="delete_shortcut">删除 AppShortcuts</string>
+    <string name="add_shortcut">添加 AppShortcuts</string>
+    <string name="select_background">更改背景</string>
+    <string name="share_card">分享卡片</string>
+    <string name="too_many_shortcuts">AppShortcuts 超过数量限制, 删除几个后再添加</string>
+    <string name="add_card">添加卡片</string>
+    <string name="add_shared_card">添加分享的卡片</string>
+    <string name="share_hint">分享的信息</string>
+    <string name="invalid_card">无法识别卡片</string>
+    <string name="correct_add_method">添加使用分享功能分享的卡片</string>
 </resources>

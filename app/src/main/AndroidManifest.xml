@@ -43,6 +43,11 @@
             android:parentActivityName=".home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".settings.SettingsActivity"
@@ -50,9 +55,19 @@
             android:parentActivityName=".home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".emulation.EmulationActivity"
+            android:label="@string/emulate"
+            android:parentActivityName=".home.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="cc.metapro.nfc.EMULATION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <service
-            android:name=".NFCService"
+            android:name=".service.NFCService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

@@ -16,6 +16,10 @@ fun Context.showToast(toShow: String) {
     })
 }
 
+fun Intent.isShareIntent(): Boolean {
+    return this.action == Intent.ACTION_SEND
+}
+
 fun AppCompatActivity.showNFCNotSupport() {
     Handler(Looper.getMainLooper()).post({
         MaterialDialog.Builder(this)

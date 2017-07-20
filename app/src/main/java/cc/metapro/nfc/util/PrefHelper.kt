@@ -12,6 +12,8 @@ class PrefHelper private constructor(context: Context) {
         val PREF_ENABLE_NFC_DIALOG = "show_enable_nfc_dialog"
         val PREF_DETAILED_READ_MODE = "detailed_read_mode"
         val PREF_FIRST_LAUNCH = "first_launch"
+        val PREF_CARD_TO_EMULATE = "card_to_emulate"
+
         private var sPref: PrefHelper? = null
 
         fun getInstance(context: Context): PrefHelper {
@@ -26,7 +28,15 @@ class PrefHelper private constructor(context: Context) {
         }
     }
 
-    fun putString(key: String, value: String) {
+    fun putString(key: String, value: String): PrefHelper {
+        val editor = mPreference.edit()
+        editor.putString(key, value)
+        editor.apply()
+        return sPref!!
+    }
+
+    fun getString(key: String, defaultValue: String): String {
+        return mPreference.getString(key, defaultValue)
     }
 
     fun putBoolean(key: String, value: Boolean): PrefHelper {

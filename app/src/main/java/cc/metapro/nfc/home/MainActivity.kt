@@ -13,14 +13,17 @@ import android.provider.Settings
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.ToggleButton
 import cc.metapro.nfc.R
 import cc.metapro.nfc.base.BaseActivity
 import cc.metapro.nfc.detail.DetailActivity
+import cc.metapro.nfc.model.Card
 import cc.metapro.nfc.settings.SettingsActivity
 import cc.metapro.nfc.util.*
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.gson.Gson
 import com.jude.swipbackhelper.SwipeBackHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -91,6 +94,33 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 PrefHelper.getInstance(this).putBoolean(PrefHelper.PREF_DETAILED_READ_MODE, false)
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.add_from_share -> {
+                MaterialDialog.Builder(this)
+                        .title(R.string.add_shared_card)
+                        .input(getString(R.string.share_hint), "", false, { _, input ->
+                            try {
+                                val card = Gson().fromJson<Card>(input.toString(), Card::class.java)
+                                DetailActivity.startActivity(this, card)
+                            } catch (e : Exception) {
+                                MaterialDialog.Builder(this)
+                                        .title(R.string.invalid_card)
+                                        .content(R.string.correct_add_method)
+                                        .show()
+                            }
+                        })
+                        .show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

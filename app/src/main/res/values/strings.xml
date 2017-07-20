@@ -11,7 +11,6 @@
     <string name="all_cards">All Cards</string>
     <string name="cards">Cards</string>
     <string name="to_add_card">Place your card at sensor to add</string>
-    <string name="mock">Mock</string>
     <string name="nfc_service">NFC Service</string>
     <string name="aid_group">AID Group</string>
 
@@ -34,7 +33,7 @@
     <string name="transaction_type">Transaction Type</string>
     <string name="transaction_country">Transaction Country</string>
     <string name="crypto">Crypto</string>
-    <string name="card_detail">Detail</string>
+    <string name="card_detail">Card Detail</string>
     <string name="raw_info">Raw</string>
     <string name="card_info">Card Info</string>
     <string name="transaction">Transaction</string>
@@ -58,4 +57,23 @@
     <string name="delete_card_c">Delete Card %1$s ?</string>
     <string name="first_launch_notice">Usage: Hold your NFC card to the back of your phone</string>
     <string name="welcome">Welcome</string>
+    <string name="rate_this_app">Rate this app</string>
+    <string name="emulate">Emulate</string>
+    <string name="stop_emulation">Stop Emulation</string>
+    <string name="emulating">Emulating ID</string>
+    <string name="saved">Saved</string>
+    <string name="emulation_notice">Emulation will JUST ACT AS an NFC ID Card</string>
+    <string name="emulation_exited">Emulation exited</string>
+    <string name="press_stop_to_exit_emulation">Tap STOP to exit Emulation</string>
+    <string name="more">More</string>
+    <string name="delete_shortcut">Delete AppShortcut</string>
+    <string name="add_shortcut">Add AppShortcut</string>
+    <string name="select_background">Change Background</string>
+    <string name="share_card">Share Card</string>
+    <string name="too_many_shortcuts">Too many AppShortcuts, delete some and add</string>
+    <string name="add_card">Add Card</string>
+    <string name="add_shared_card">Add Shared Info</string>
+    <string name="share_hint">Share Message</string>
+    <string name="invalid_card">Invalid Card</string>
+    <string name="correct_add_method">Please paste text created by sharing card</string>
 </resources>

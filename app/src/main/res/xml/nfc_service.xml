@@ -6,4 +6,8 @@
         android:category="payment"
         android:description="@string/aid_group">
     </aid-group>
+    <aid-group
+        android:category="other"
+        android:description="@string/aid_group">
+    </aid-group>
 </host-apdu-service>
