@@ -4,15 +4,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.IsoDep
 import android.nfc.tech.MifareClassic
 import android.util.Log
-import cc.metapro.nfc.R
 import cc.metapro.nfc.model.Card
-import com.afollestad.materialdialogs.MaterialDialog
 import com.github.devnied.emvnfccard.model.EmvCard
 import com.github.devnied.emvnfccard.parser.EmvParser
 import com.github.devnied.emvnfccard.utils.AtrUtils
@@ -26,7 +23,6 @@ object NFCUtil {
             NfcAdapter.ACTION_TECH_DISCOVERED,
             NfcAdapter.ACTION_TAG_DISCOVERED
     )
-
 }
 
 fun ByteArray.string(): String {
@@ -84,7 +80,7 @@ fun Context.readTag(tag: Tag): Card? {
     var data = byteArrayOf()
     var cardEmv: EmvCard? = null
     // fetch data from the card if in detailed mode
-    if (PrefHelper.getInstance(this).getBoolean(PrefHelper.PREF_DETAILED_READ_MODE, false)) {
+    if (getValue(PrefHelper.PREF_DETAILED_READ_MODE, false)) {
         // resolve as EMV card
         val tagCommon = IsoDep.get(tag)
         if (tagCommon != null) {
@@ -150,23 +146,6 @@ fun Context.handleNFCIntent(intent: Intent): Card? {
     // for NFC IC Card
     // todo
     return null
-}
-
-fun Context.checkHCESupport(onOk: MaterialDialog.SingleButtonCallback) {
-    if (this.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
-        MaterialDialog.Builder(this)
-                .title(R.string.notice)
-                .content(R.string.version_notice)
-                .positiveText(android.R.string.ok)
-                .onPositive(onOk)
-                .show()
-        return
-    }
-
-    MaterialDialog.Builder(this)
-            .title(R.string.fail)
-            .content(R.string.hce_unsupported)
-            .positiveText(android.R.string.ok)
 }
 
 fun Context.prepareNFCPendingIntent(): PendingIntent {

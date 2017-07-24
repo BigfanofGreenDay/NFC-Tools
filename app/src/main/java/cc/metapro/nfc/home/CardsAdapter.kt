@@ -5,6 +5,7 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Build
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -21,6 +22,7 @@ import cc.metapro.nfc.util.showSnackBar
 import cc.metapro.nfc.util.showToast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.Gson
+import com.scottyab.rootbeer.RootBeer
 
 internal interface ItemTouchHelperAdapter {
     fun onItemDismiss(position: Int)
@@ -117,10 +119,24 @@ class CardsAdapter(cardList: List<Card>) : RecyclerView.Adapter<CardsAdapter.Com
                 mTitleText?.text = c.title
                 mDescpText?.text = c.descp
                 itemView.setOnClickListener({ DetailActivity.startActivity(itemView.context, c) })
-                mEmulation?.setOnClickListener {
-                    val intent = Intent(itemView.context, EmulationActivity::class.java)
-                    intent.putExtra(NFCService.EXTRA_CARD, c.id)
-                    itemView.context.startActivity(intent)
+                if (c.id.split(":").size > 4) {
+                    mEmulation?.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
+                    mEmulation?.setOnClickListener { _ ->
+                        itemView.context.showToast(itemView.context.getString(R.string.invalid_uid))
+                    }
+                } else {
+                    mEmulation?.setOnClickListener {
+                        val rootBeer = RootBeer(itemView.context)
+                        if (!rootBeer.isRooted) {
+                            itemView.context.showToast(itemView.context.getString(R.string.no_root_no_emulation))
+                            return@setOnClickListener
+                        } else {
+                            Runtime.getRuntime().exec("su").destroy()
+                            val intent = Intent(itemView.context, EmulationActivity::class.java)
+                            intent.putExtra(NFCService.EXTRA_CARD, c.id)
+                            itemView.context.startActivity(intent)
+                        }
+                    }
                 }
                 mMore?.setOnClickListener {
                     val dialog = MaterialDialog.Builder(itemView.context)

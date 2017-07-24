@@ -23,11 +23,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation 'junit:junit:4.12'
     implementation('com.afollestad.material-dialogs:core:0.9.4.5') {
         exclude group: 'com.android.support'
     }
@@ -37,11 +37,10 @@ dependencies {
     implementation "com.android.support:cardview-v7:${versions.supportlibs}"
     implementation "com.android.support:support-v4:${versions.supportlibs}"
     implementation "com.android.support:design:${versions.supportlibs}"
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.github.devnied.emvnfccard:library:2.1.1'
     implementation 'com.jude:swipebackhelper:3.1.2'
     implementation 'com.google.code.gson:gson:2.8.1'
-    implementation 'com.google.zxing:core:3.3.0'
-    implementation 'com.google.zxing:android-core:3.3.0'
-    implementation 'com.google.zxing:android-integration:3.3.0'
+    implementation 'com.scottyab:rootbeer-lib:0.0.6'
 }

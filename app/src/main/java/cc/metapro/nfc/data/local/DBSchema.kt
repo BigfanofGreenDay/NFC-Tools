@@ -9,7 +9,6 @@ object CardSchema : BaseColumns {
     val cardDescp = "card_descp"
     val cardKey = "card_key"
     val cardTech = "card_tech"
-    val cardType = "card_type"
     val cardData = "card_data"
     val cardEmv = "card_emv"
 }

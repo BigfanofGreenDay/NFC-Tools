@@ -12,41 +12,52 @@ class PrefHelper private constructor(context: Context) {
         val PREF_ENABLE_NFC_DIALOG = "show_enable_nfc_dialog"
         val PREF_DETAILED_READ_MODE = "detailed_read_mode"
         val PREF_FIRST_LAUNCH = "first_launch"
-        val PREF_CARD_TO_EMULATE = "card_to_emulate"
+        val PREF_PREV_CONF_SAVED = "prev_conf_saved"
 
-        private var sPref: PrefHelper? = null
+        private lateinit var sPref: PrefHelper
 
-        fun getInstance(context: Context): PrefHelper {
-            if (sPref == null) {
-                synchronized(PrefHelper::class.java) {
-                    if (sPref == null) {
-                        sPref = PrefHelper(context)
-                    }
-                }
-            }
-            return sPref!!
+        fun initial(context: Context) {
+            sPref = PrefHelper(context)
+        }
+
+        fun getInstance(): PrefHelper {
+            return sPref
         }
     }
 
-    fun putString(key: String, value: String): PrefHelper {
+    internal inline fun <reified T> getValue(key: String, defaultValue: T): T {
+        when (defaultValue) {
+            is String -> return mPreference.getString(key, defaultValue) as T
+            is Boolean -> return mPreference.getBoolean(key, defaultValue) as T
+            is Int -> return mPreference.getInt(key, defaultValue) as T
+            is Long -> return mPreference.getLong(key, defaultValue) as T
+            is Float -> return mPreference.getFloat(key, defaultValue) as T
+            else -> throw UnsupportedOperationException("Unknown value type")
+        }
+    }
+
+    internal inline fun <reified T> putValue(key: String, value: T): PrefHelper {
         val editor = mPreference.edit()
-        editor.putString(key, value)
-        editor.apply()
-        return sPref!!
+        try {
+            when (value) {
+                is String -> editor.putString(key, value)
+                is Boolean -> editor.putBoolean(key, value)
+                is Int -> editor.putInt(key, value)
+                is Long -> editor.putLong(key, value)
+                is Float -> editor.putFloat(key, value)
+                else -> throw UnsupportedOperationException("Unknown value type")
+            }
+        } finally {
+            editor.apply()
+        }
+        return sPref
     }
+}
 
-    fun getString(key: String, defaultValue: String): String {
-        return mPreference.getString(key, defaultValue)
-    }
+internal inline fun <reified T> getValue(key: String, defaultValue: T): T {
+    return PrefHelper.getInstance().getValue(key, defaultValue)
+}
 
-    fun putBoolean(key: String, value: Boolean): PrefHelper {
-        val editor = mPreference.edit()
-        editor.putBoolean(key, value)
-        editor.apply()
-        return sPref!!
-    }
-
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
-        return mPreference.getBoolean(key, defaultValue)
-    }
+internal inline fun <reified T> putValue(key: String, value: T) {
+    PrefHelper.getInstance().putValue(key, value)
 }

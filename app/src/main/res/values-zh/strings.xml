@@ -59,7 +59,7 @@
     <string name="emulating">正在模拟 ID</string>
     <string name="saved">已保存</string>
     <string name="emulation_notice">仅模拟卡片 ID</string>
-    <string name="emulation_exited">卡片模拟已退出</string>
+    <string name="emulation_exited">已退出模拟, 配置已恢复</string>
     <string name="press_stop_to_exit_emulation">点击 停止 结束模拟</string>
     <string name="more">更多</string>
     <string name="delete_shortcut">删除 AppShortcuts</string>
@@ -72,4 +72,11 @@
     <string name="share_hint">分享的信息</string>
     <string name="invalid_card">无法识别卡片</string>
     <string name="correct_add_method">添加使用分享功能分享的卡片</string>
+    <string name="invalid_uid">非法的 UID, 无法模拟</string>
+    <string name="restart_nfc_to_use">请重新打开 NFC 启用新的配置</string>
+    <string name="emulation_fail">模拟失败 (暂不支持的机型)</string>
+    <string name="no_root_no_emulation">当前暂不支持无 root 模拟</string>
+    <string name="emulation_state">当前状态</string>
+    <string name="nfc_config_changed">配置修改成功, 需要重启 NFC 才能开始模拟</string>
+    <string name="restart_nfc">重启 NFC</string>
 </resources>

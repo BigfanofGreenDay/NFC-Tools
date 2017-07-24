@@ -30,8 +30,7 @@ fun AppCompatActivity.showNFCNotSupport() {
 }
 
 fun Context.showEnableNFC() {
-    val helper = PrefHelper.getInstance(this)
-    if (!helper.getBoolean(PrefHelper.PREF_ENABLE_NFC_DIALOG, true)) {
+    if (!getValue(PrefHelper.PREF_ENABLE_NFC_DIALOG, true)) {
         return
     }
     Handler(Looper.getMainLooper()).post({
@@ -41,7 +40,7 @@ fun Context.showEnableNFC() {
             startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
         }).negativeText(android.R.string.cancel)
                 .neutralText(R.string.no_more_notice).onNeutral({ _, _ ->
-            helper.putBoolean(PrefHelper.PREF_ENABLE_NFC_DIALOG, false)
+            putValue(PrefHelper.PREF_ENABLE_NFC_DIALOG, false)
         }).show()
     })
 }

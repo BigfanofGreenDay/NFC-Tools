@@ -63,7 +63,7 @@
     <string name="emulating">Emulating ID</string>
     <string name="saved">Saved</string>
     <string name="emulation_notice">Emulation will JUST ACT AS an NFC ID Card</string>
-    <string name="emulation_exited">Emulation exited</string>
+    <string name="emulation_exited">Emulation exited, config restored</string>
     <string name="press_stop_to_exit_emulation">Tap STOP to exit Emulation</string>
     <string name="more">More</string>
     <string name="delete_shortcut">Delete AppShortcut</string>
@@ -76,4 +76,11 @@
     <string name="share_hint">Share Message</string>
     <string name="invalid_card">Invalid Card</string>
     <string name="correct_add_method">Please paste text created by sharing card</string>
+    <string name="invalid_uid">Invalid UID, Can\'t emulate</string>
+    <string name="restart_nfc_to_use">Success, please restart NFC</string>
+    <string name="emulation_fail">Emulation Fail, unsupported device</string>
+    <string name="no_root_no_emulation">No Root Access available, can\'t emulate</string>
+    <string name="emulation_state">Emulation State</string>
+    <string name="nfc_config_changed">Configuration changed, restart NFC to emulation</string>
+    <string name="restart_nfc">Restart NFC</string>
 </resources>

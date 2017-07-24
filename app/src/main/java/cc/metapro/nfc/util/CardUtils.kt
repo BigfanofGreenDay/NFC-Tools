@@ -5,6 +5,16 @@ import cc.metapro.nfc.R
 import com.github.devnied.emvnfccard.enums.EmvCardScheme
 import org.apache.commons.lang3.StringUtils
 
+fun ByteArray.toCommaSepString(): String {
+    val sb = StringBuilder()
+    for (b in this) {
+        sb.append(String.format(" %02x,", b))
+    }
+    if (sb.isNotEmpty()) {
+        sb.delete(sb.length - 1, sb.length)
+    }
+    return sb.toString().toUpperCase()
+}
 
 fun formatCardNumber(pCardNumber: String?, pType: EmvCardScheme?): String {
     var ret = ""

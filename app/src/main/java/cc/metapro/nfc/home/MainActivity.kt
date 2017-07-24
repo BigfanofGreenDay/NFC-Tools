@@ -68,12 +68,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     fun initView() {
-        if (PrefHelper.getInstance(this).getBoolean(PrefHelper.PREF_FIRST_LAUNCH, true)) {
+        if (getValue(PrefHelper.PREF_FIRST_LAUNCH, true)) {
             MaterialDialog.Builder(this)
                     .title(R.string.welcome).content(R.string.first_launch_notice)
                     .positiveText(android.R.string.ok).show()
-            PrefHelper.getInstance(this).putBoolean(PrefHelper.PREF_FIRST_LAUNCH, false)
-            PrefHelper.getInstance(this).putBoolean(PrefHelper.PREF_DETAILED_READ_MODE, true)
+            putValue(PrefHelper.PREF_FIRST_LAUNCH, false)
+            putValue(PrefHelper.PREF_DETAILED_READ_MODE, true)
         }
 
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false)
@@ -85,13 +85,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         val toggle_detail_mode = nav_view.getHeaderView(0)
                 .findViewById<ToggleButton>(R.id.toggle_detail_mode)
-        toggle_detail_mode.isChecked = PrefHelper.getInstance(this)
-                .getBoolean(PrefHelper.PREF_DETAILED_READ_MODE, true)
+        toggle_detail_mode.isChecked = getValue(PrefHelper.PREF_DETAILED_READ_MODE, true)
         toggle_detail_mode.setOnClickListener({ _ ->
             if (toggle_detail_mode.isChecked) {
-                PrefHelper.getInstance(this).putBoolean(PrefHelper.PREF_DETAILED_READ_MODE, true)
+                putValue(PrefHelper.PREF_DETAILED_READ_MODE, true)
             } else {
-                PrefHelper.getInstance(this).putBoolean(PrefHelper.PREF_DETAILED_READ_MODE, false)
+                putValue(PrefHelper.PREF_DETAILED_READ_MODE, false)
             }
         })
     }
@@ -110,7 +109,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                             try {
                                 val card = Gson().fromJson<Card>(input.toString(), Card::class.java)
                                 DetailActivity.startActivity(this, card)
-                            } catch (e : Exception) {
+                            } catch (e: Exception) {
                                 MaterialDialog.Builder(this)
                                         .title(R.string.invalid_card)
                                         .content(R.string.correct_add_method)

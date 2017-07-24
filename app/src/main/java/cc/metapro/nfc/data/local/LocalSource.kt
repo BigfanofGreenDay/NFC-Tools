@@ -8,33 +8,22 @@ import cc.metapro.nfc.model.Category
 import java.util.*
 
 class LocalSource private constructor(context: Context) : Source {
+    private val db: SQLiteDatabase = DBHelper(context).writableDatabase
 
     companion object {
-        private var localSource: LocalSource? = null
-        private var db: SQLiteDatabase? = null
+        private lateinit var localSource: LocalSource
 
         fun initial(context: Context) {
-            synchronized(LocalSource::class.java) {
-                if (localSource == null) {
-                    synchronized(LocalSource::class.java) {
-                        localSource = LocalSource(context)
-                    }
-                }
-            }
+            localSource = LocalSource(context)
         }
 
         fun getInstance(): Source {
-            return localSource!!
+            return localSource
         }
     }
 
-    init {
-        val dbHelper = DBHelper(context)
-        db = dbHelper.writableDatabase
-    }
-
     override fun getCards(): List<Card> {
-        val c = db?.rawQuery("SELECT * FROM ${CardSchema.tableName}", null)
+        val c = db.rawQuery("SELECT * FROM ${CardSchema.tableName}", null)
         val result = ArrayList<Card>()
         if (c != null) {
             while (c.moveToNext()) {
@@ -46,7 +35,7 @@ class LocalSource private constructor(context: Context) : Source {
     }
 
     override fun getCard(id: String): Card? {
-        val c = db?.rawQuery("""
+        val c = db.rawQuery("""
                 |SELECT * FROM ${CardSchema.tableName}
                 |WHERE ${CardSchema.cardID} = ?""".trimMargin(),
                 arrayOf(id))
@@ -60,7 +49,7 @@ class LocalSource private constructor(context: Context) : Source {
     }
 
     override fun getCardsByCategory(category: String): List<Card> {
-        val c = db?.rawQuery("""
+        val c = db.rawQuery("""
             |SELECT ${CardSchema.cardID}, ${CardSchema.cardTitle}, ${CardSchema.cardDescp}, ${CardSchema.cardData}
             |FROM ${CardCategorySchema.tableName}, ${CardSchema.tableName}, ${CategorySchema.tableName}
             |WHERE ${CardCategorySchema.cardID} = ${CardSchema.cardID}
@@ -78,11 +67,11 @@ class LocalSource private constructor(context: Context) : Source {
     }
 
     override fun addCard(card: Card) {
-        db?.insert(CardSchema.tableName, null, CardWrapper.wrap(card))
+        db.insert(CardSchema.tableName, null, CardWrapper.wrap(card))
     }
 
     override fun delCard(id: String) {
-        db?.delete(CardSchema.tableName, "${CardSchema.cardID} = ?", arrayOf(id))
+        db.delete(CardSchema.tableName, "${CardSchema.cardID} = ?", arrayOf(id))
     }
 
     override fun updateCard(id: String, card: Card) {
@@ -91,7 +80,7 @@ class LocalSource private constructor(context: Context) : Source {
     }
 
     override fun getCategories(): List<Category> {
-        val c = db?.rawQuery("SELECT * FROM ${CategorySchema.tableName}", null)
+        val c = db.rawQuery("SELECT * FROM ${CategorySchema.tableName}", null)
         val result = ArrayList<Category>()
         if (c != null) {
             while (c.moveToNext()) {

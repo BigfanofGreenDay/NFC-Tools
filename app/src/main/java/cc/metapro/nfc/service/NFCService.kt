@@ -24,22 +24,11 @@ class NFCService : HostApduService() {
 
     override fun processCommandApdu(commandApdu: ByteArray?, etras: Bundle?): ByteArray {
         if (commandApdu != null) {
-            Log.d("Received APDU", commandApdu.string())
-            if (commandApdu.size >= 2 && commandApdu[0] == 0.toByte() && commandApdu[1] == 0xA4.toByte()) {
-                if (mCard != null) {
-                    val c = mCard!!
-                    Log.d("Sending response", c.id)
-                    return c.id.byteArray()
-                }
-            } else {
-                if (mCard != null) {
-                    val c = mCard!!
-                    val sb = StringBuilder(c.data)
-                    sb.delete(0, c.id.length + 1)
-                    sb.delete(128, sb.length)
-                    Log.d("Sending response", sb.toString())
-                    return sb.toString().byteArray()
-                }
+            if (mCard != null) {
+                val c = mCard!!
+                val sb = StringBuilder(c.data)
+                sb.delete(sb.indexOf("FF:FF:00:00") + 5, sb.length)
+                return sb.toString().byteArray()
             }
         }
         return byteArrayOf()
@@ -48,5 +37,4 @@ class NFCService : HostApduService() {
     override fun onDeactivated(reason: Int) {
         Log.d("Deactivated", "With reason: $reason")
     }
-
 }
