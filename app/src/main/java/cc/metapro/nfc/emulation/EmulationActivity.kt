@@ -46,14 +46,12 @@ class EmulationActivity : BaseActivity() {
     }
 
     fun initNFCConfig() {
-        appendLog("Your Device is: ${Build.DEVICE}")
         try {
             val processes = Runtime.getRuntime()
             val su = processes.exec("su")
             val suOutput = PrintWriter(OutputStreamWriter(su.outputStream))
             suOutput.println("mount -o rw,remount /system")
             suOutput.flush()
-            appendLog("Trying find config file for your device from...")
             // find files locally
             val confFile = "nfc/${Build.DEVICE.toLowerCase().trim()}.conf"
             var conf = assets.readAll(confFile)
@@ -64,7 +62,6 @@ class EmulationActivity : BaseActivity() {
             suOutput.println("cat << EOF > $mConfAddress")
             suOutput.println("$conf\nEOF")
             suOutput.flush()
-            appendLog("System configuration is: $mConfAddress")
 
             if (!getValue(PrefHelper.PREF_PREV_CONF_SAVED, false)) {
                 // read initial configuration

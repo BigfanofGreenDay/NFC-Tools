@@ -5,6 +5,7 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Build
+import android.support.annotation.Keep
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
@@ -13,13 +14,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import cc.metapro.nfc.R
 import cc.metapro.nfc.detail.DetailActivity
 import cc.metapro.nfc.emulation.EmulationActivity
 import cc.metapro.nfc.model.Card
 import cc.metapro.nfc.service.NFCService
-import cc.metapro.nfc.util.showSnackBar
-import cc.metapro.nfc.util.showToast
+import cc.metapro.nfc.util.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.Gson
 import com.scottyab.rootbeer.RootBeer
@@ -131,16 +132,19 @@ class CardsAdapter(cardList: List<Card>) : RecyclerView.Adapter<CardsAdapter.Com
                             itemView.context.showToast(itemView.context.getString(R.string.no_root_no_emulation))
                             return@setOnClickListener
                         } else {
-                            Runtime.getRuntime().exec("su").destroy()
-                            val intent = Intent(itemView.context, EmulationActivity::class.java)
-                            intent.putExtra(NFCService.EXTRA_CARD, c.id)
-                            itemView.context.startActivity(intent)
+                            if (!getValue(PrefHelper.PREF_FIRST_EMULATION, false)) {
+                                Runtime.getRuntime().exec("su")
+                                putValue(PrefHelper.PREF_FIRST_EMULATION, true)
+                            } else {
+                                val intent = Intent(itemView.context, EmulationActivity::class.java)
+                                intent.putExtra(NFCService.EXTRA_CARD, c.id)
+                                itemView.context.startActivity(intent)
+                            }
                         }
                     }
                 }
                 mMore?.setOnClickListener {
                     val dialog = MaterialDialog.Builder(itemView.context)
-//                    val selectBackground = itemView.context.getString(R.string.select_background)
                     val shareCard = itemView.context.getString(R.string.share_card)
                     val items = arrayListOf(shareCard)
                     val deleteShortcut = itemView.context.getString(R.string.delete_shortcut)
@@ -184,10 +188,6 @@ class CardsAdapter(cardList: List<Card>) : RecyclerView.Adapter<CardsAdapter.Com
                                 intent.type = "text/plain"
                                 itemView.context.startActivity(intent)
                             }
-//                            selectBackground -> {
-//                                MaterialDialog.Builder(itemView.context)
-//                                        .show()
-//                            }
                         }
                     }
                     dialog.show()

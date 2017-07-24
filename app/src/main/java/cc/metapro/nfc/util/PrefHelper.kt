@@ -13,6 +13,7 @@ class PrefHelper private constructor(context: Context) {
         val PREF_DETAILED_READ_MODE = "detailed_read_mode"
         val PREF_FIRST_LAUNCH = "first_launch"
         val PREF_PREV_CONF_SAVED = "prev_conf_saved"
+        val PREF_FIRST_EMULATION = "first_emulation"
 
         private lateinit var sPref: PrefHelper
 

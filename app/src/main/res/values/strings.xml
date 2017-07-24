@@ -63,7 +63,7 @@
     <string name="emulating">Emulating ID</string>
     <string name="saved">Saved</string>
     <string name="emulation_notice">Emulation will JUST ACT AS an NFC ID Card</string>
-    <string name="emulation_exited">Emulation exited, config restored</string>
+    <string name="emulation_exited">Emulation exited, config restored, restart NFC to implement</string>
     <string name="press_stop_to_exit_emulation">Tap STOP to exit Emulation</string>
     <string name="more">More</string>
     <string name="delete_shortcut">Delete AppShortcut</string>

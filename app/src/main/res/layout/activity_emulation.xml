@@ -61,17 +61,14 @@
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <TextView
+        android:id="@+id/log"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:id="@+id/log"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/emulation_notice"/>
-    </android.support.v4.widget.NestedScrollView>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/emulation_notice"
+        android:textSize="18sp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/stop_emulation"

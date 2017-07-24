@@ -59,7 +59,7 @@
     <string name="emulating">正在模拟 ID</string>
     <string name="saved">已保存</string>
     <string name="emulation_notice">仅模拟卡片 ID</string>
-    <string name="emulation_exited">已退出模拟, 配置已恢复</string>
+    <string name="emulation_exited">已退出模拟, 配置已恢复, 重启 NFC 来应用</string>
     <string name="press_stop_to_exit_emulation">点击 停止 结束模拟</string>
     <string name="more">更多</string>
     <string name="delete_shortcut">删除 AppShortcuts</string>
